@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-function loggedMethod(originalMethod: any, _context: any) {
+function myDecorator(originalMethod: any, _context: any) {
   function replacementMethod(this: any, ...args: any[]) {
     return `${Date.now()}: ${originalMethod.call(this, ...args)}`;
   }
@@ -9,15 +9,15 @@ function loggedMethod(originalMethod: any, _context: any) {
   return replacementMethod;
 }
 
-class Person {
-  @loggedMethod
+class MyClass {
+  @myDecorator
   greet() {
     return "Hello.";
   }
 }
-const person = new Person();
+const m = new MyClass();
 ---
 
 <Layout>
-	Message: {person.greet()}
+	Message: {m.greet()}
 </Layout>
